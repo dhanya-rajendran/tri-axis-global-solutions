@@ -95,6 +95,10 @@ export function EnquiryForm({
     } else {
       setStatus("error");
       setServerMessage(result.message);
+      if (result.fieldErrors) {
+        const known = Object.fromEntries(Object.entries(result.fieldErrors).filter(([k]) => fields.some((f) => f.name === k)));
+        setErrors(known);
+      }
     }
   };
 
@@ -132,6 +136,12 @@ export function EnquiryForm({
           </p>
         </div>
       )}
+
+      {/* Honeypot: hidden from people, often filled by spam bots. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+        <label htmlFor={`${uid}-website`}>Leave this field empty</label>
+        <input id={`${uid}-website`} type="text" name="website" tabIndex={-1} autoComplete="off" />
+      </div>
 
       <div className={cn("grid gap-x-5 gap-y-5", columns === 2 && "sm:grid-cols-2")}>
         {fields.map((field) => {

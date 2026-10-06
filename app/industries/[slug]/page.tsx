@@ -14,8 +14,6 @@ import { breadcrumbJsonLd } from "@/lib/seo/jsonld";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { getIndustries, getIndustryBySlug, getJobFilterOptions, getJobsByIndustry } from "@/lib/services/api";
 
-export const dynamicParams = false;
-
 export async function generateStaticParams() {
   return (await getIndustries()).map((i) => ({ slug: i.slug }));
 }

@@ -16,8 +16,6 @@ import { breadcrumbJsonLd } from "@/lib/seo/jsonld";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { getServiceBySlug, getServices } from "@/lib/services/api";
 
-export const dynamicParams = false;
-
 export async function generateStaticParams() {
   return (await getServices()).map((s) => ({ slug: s.slug }));
 }

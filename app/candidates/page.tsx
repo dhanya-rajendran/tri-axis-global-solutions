@@ -10,11 +10,10 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { candidateReasons, candidateServices } from "@/lib/data/company";
 import { images } from "@/lib/data/images";
 import { breadcrumbJsonLd } from "@/lib/seo/jsonld";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { getJobFilterOptions } from "@/lib/services/api";
+import { getFeatures, getJobFilterOptions } from "@/lib/services/api";
 
 export const metadata: Metadata = buildMetadata({
   title: "For Candidates – Jobs & Career Support in the UAE",
@@ -23,7 +22,11 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function CandidatesPage() {
-  const options = await getJobFilterOptions();
+  const [options, candidateServices, candidateReasons] = await Promise.all([
+    getJobFilterOptions(),
+    getFeatures("candidate_services"),
+    getFeatures("candidate_reasons"),
+  ]);
   return (
     <>
       <PageHero
@@ -52,14 +55,14 @@ export default async function CandidatesPage() {
             {candidateServices.map((s) => (
               <li key={s.id} className="reveal">
                 <Link
-                  href={s.href}
+                  href={s.href ?? "/jobs"}
                   className="group flex h-full flex-col rounded-card border border-line bg-white p-7 transition-[border-color,box-shadow] hover:border-navy/30 hover:shadow-[0_20px_40px_-26px_rgba(7,27,54,0.45)]"
                 >
                   <Icon name={s.icon} className="size-7 text-teal" />
                   <h3 className="mt-5 font-serif text-xl font-medium text-navy">{s.title}</h3>
                   <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{s.description}</p>
                   <span className="mt-6 inline-flex items-center gap-1.5 text-[13px] font-semibold text-teal-dark group-hover:text-navy">
-                    {s.cta} <ArrowRight aria-hidden className="size-3.5" />
+                    {s.cta ?? "Learn more"} <ArrowRight aria-hidden className="size-3.5" />
                   </span>
                 </Link>
               </li>

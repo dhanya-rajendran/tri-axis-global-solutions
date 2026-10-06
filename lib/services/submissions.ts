@@ -31,7 +31,15 @@ export async function submitEnquiry(kind: EnquiryKind, data: FormData): Promise<
 
   try {
     const res = await fetch(`${endpoint}/${kind}`, { method: "POST", body: data });
-    if (!res.ok) return { ok: false, mock: false, message: "We couldn't send your details. Please try again." };
+    const body = (await res.json().catch(() => ({}))) as { error?: string; fieldErrors?: Record<string, string> };
+    if (!res.ok) {
+      return {
+        ok: false,
+        mock: false,
+        message: body.error ?? "We couldn't send your details. Please try again.",
+        fieldErrors: body.fieldErrors,
+      };
+    }
     return { ok: true, mock: false };
   } catch {
     return { ok: false, mock: false, message: "Network error. Please check your connection and try again." };

@@ -16,7 +16,7 @@ export function organizationJsonLd() {
     name: siteConfig.name,
     legalName: siteConfig.legalName,
     url: siteConfig.url,
-    logo: absoluteUrl("/icon.svg"),
+    logo: absoluteUrl("/images/logo-tag.png"),
     slogan: siteConfig.tagline,
     description: siteConfig.description,
     email: siteConfig.contact.email,

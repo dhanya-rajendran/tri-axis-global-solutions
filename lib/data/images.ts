@@ -20,7 +20,20 @@ const img = (
   brief: string,
 ): ImageAsset => ({ src: `/images/${file}`, width, height, alt, brief, placeholder: true });
 
+const banner = (file: string, width: number, height: number): ImageAsset => ({
+  src: `/images/${file}`,
+  width,
+  height,
+  alt: "TAG — TriAxis Global Solutions FZE. #TAG us for your recruitment needs: technology, cybersecurity, AI, ELV, engineering and corporate leadership. People, expertise, possibilities.",
+  placeholder: false,
+});
+
 export const images = {
+  /** Approved brand banner (homepage hero). Desktop 8:3, mobile 16:9 crop centred on the logo. */
+  heroBanner: {
+    desktop: banner("hero-tag-banner.jpg", 2048, 768),
+    mobile: banner("hero-tag-banner-mobile.jpg", 1200, 675),
+  },
   hero: img(
     "hero-dubai-skyline.jpg",
     2400,
@@ -126,6 +139,6 @@ export const images = {
     "Rising bar chart representing salary growth in AED",
     "Salary / finance report visual.",
   ),
-} satisfies Record<string, ImageAsset>;
+};
 
 export type ImageKey = keyof typeof images;

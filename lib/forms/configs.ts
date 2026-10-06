@@ -47,7 +47,7 @@ export const candidateFormFields = (industries: Option[], locations: Option[]): 
   { name: "experienceYears", label: "Years of experience", type: "number", required: true, min: 0, max: 50, placeholder: "e.g. 6" },
   { name: "preferredIndustry", label: "Preferred industry", type: "select", required: true, placeholder: "Select an industry", options: industries },
   { name: "preferredLocation", label: "Preferred location", type: "select", placeholder: "Any location", options: locations, span: 2 },
-  { name: "cv", label: "CV", type: "file", required: true, span: 2, accept: ".pdf,.doc,.docx", maxSizeMb: 5, hint: "PDF or Word, max 5 MB." },
+  { name: "cv", label: "CV", type: "file", required: true, span: 2, accept: ".pdf,.doc,.docx", maxSizeMb: 4, hint: "PDF or Word, max 4 MB." },
   { name: "message", label: "Message", type: "textarea", span: 2, maxLength: 2000, placeholder: "Anything else we should know? (optional)" },
 ];
 
@@ -55,6 +55,6 @@ export const jobApplicationFields: FormFieldConfig[] = [
   { name: "name", label: "Full name", type: "text", required: true, autoComplete: "name", placeholder: "Your name", span: 2 },
   { name: "email", label: "Email", type: "email", required: true, autoComplete: "email", placeholder: "you@email.com", span: 2 },
   { name: "phone", label: "Phone", type: "tel", required: true, autoComplete: "tel", placeholder: "+971 50 123 4567", span: 2 },
-  { name: "cv", label: "CV", type: "file", required: true, span: 2, accept: ".pdf,.doc,.docx", maxSizeMb: 5, hint: "PDF or Word, max 5 MB." },
+  { name: "cv", label: "CV", type: "file", required: true, span: 2, accept: ".pdf,.doc,.docx", maxSizeMb: 4, hint: "PDF or Word, max 4 MB." },
   { name: "message", label: "Cover note", type: "textarea", span: 2, maxLength: 1500, placeholder: "Why are you a good fit? (optional)" },
 ];

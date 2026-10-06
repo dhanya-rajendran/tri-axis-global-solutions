@@ -27,4 +27,6 @@ export interface SubmissionResult {
   /** True when no backend endpoint is configured and the payload was not sent anywhere. */
   mock: boolean;
   message?: string;
+  /** Server-side validation errors keyed by field name. */
+  fieldErrors?: Record<string, string>;
 }

@@ -1,16 +1,20 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { LegalPage } from "@/components/templates/LegalPage";
-import { legalDocuments } from "@/lib/data/legal";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { getLegalPage } from "@/lib/services/api";
 
-const doc = legalDocuments.cookies;
+export async function generateMetadata(): Promise<Metadata> {
+  const doc = await getLegalPage("cookie-policy");
+  return buildMetadata({
+    title: doc?.title ?? "Cookie Policy",
+    description: `${doc?.title ?? "Cookie Policy"} for TriAxis Global Solutions FZE — ${(doc?.intro ?? "").slice(0, 90)}`.slice(0, 160),
+    path: "/cookie-policy",
+  });
+}
 
-export const metadata: Metadata = buildMetadata({
-  title: doc.title,
-  description: `${doc.title} for TriAxis Global Solutions FZE — ${doc.intro.slice(0, 90)}`.slice(0, 160),
-  path: "/cookie-policy",
-});
-
-export default function Page() {
+export default async function Page() {
+  const doc = await getLegalPage("cookie-policy");
+  if (!doc) notFound();
   return <LegalPage doc={doc} />;
 }

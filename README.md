@@ -62,13 +62,21 @@ All tokens live in `app/globals.css` (`@theme`): navy / gold / teal palette, neu
 - Buttons: `primary` (gold), `secondary` (navy), `outline`, `outline-light`, `text`
 - Motion: subtle, CSS-only; scroll reveals use `animation-timeline` as progressive enhancement; `prefers-reduced-motion` respected
 
-## Phase 2 integration guide
+## Admin dashboard integration
 
-1. **Content:** reimplement the functions in `lib/services/api.ts` (`getJobs`, `getJobBySlug`, `getServices`, `getIndustries`, `getInsights`, `getInsightBySlug`, `getStatistics`, `getTestimonials`, `getSiteSettings`, …) as API requests returning the same types from `types/`. Pages and components don't change.
-2. **Icons:** content references icons by string key (`components/ui/Icon.tsx` registry) so API data stays serialisable.
-3. **Rich text:** articles and service bodies use the `ContentBlock[]` model in `types/common.ts`.
-4. **Forms:** set `NEXT_PUBLIC_FORMS_ENDPOINT`. Each form POSTs `multipart/form-data` to `${endpoint}/{contact|employer|candidate|job-application}` (CV files included). Field names are defined in `lib/forms/configs.ts`.
-5. **Caching:** consider tagged fetches / revalidation for jobs and insights once data is remote. `/jobs/[slug]` and `/insights/[slug]` already allow on-demand rendering of new slugs.
+Content is managed in the separate **admin-tri-axis** app. `lib/services/api.ts` fetches from its public API when
+`ADMIN_API_URL` is set (cached with the `content` tag, revalidated by the admin via `POST /api/revalidate`), and falls
+back to the bundled data in `lib/data` when it isn't — so the site still builds and renders without the admin.
+
+| Variable | Purpose |
+| --- | --- |
+| `ADMIN_API_URL` | e.g. `https://admin.example.com/api/public` |
+| `ADMIN_API_KEY` | Must match `PUBLIC_API_KEY` in the admin (optional) |
+| `NEXT_PUBLIC_FORMS_ENDPOINT` | e.g. `https://admin.example.com/api/public/enquiries` — form submissions are stored as enquiries |
+| `REVALIDATE_SECRET` | Must match `WEBSITE_REVALIDATE_SECRET` in the admin |
+| `CONTENT_REVALIDATE_SECONDS` | Cache lifetime for fetched content (default 300) |
+
+Images entered in the admin can be any URL, so `next.config.ts` serves images unoptimized.
 
 ## Placeholders to replace before launch
 

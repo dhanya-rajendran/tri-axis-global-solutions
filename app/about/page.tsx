@@ -9,10 +9,9 @@ import { PageHero } from "@/components/templates/PageHero";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { companyValues, mission, teamMembers, valuePropositions } from "@/lib/data/company";
 import { breadcrumbJsonLd } from "@/lib/seo/jsonld";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { getServices, getStatistics, getTestimonials } from "@/lib/services/api";
+import { getFeatures, getMission, getServices, getStatistics, getTeamMembers, getTestimonials } from "@/lib/services/api";
 
 export const metadata: Metadata = buildMetadata({
   title: "About Us",
@@ -22,7 +21,15 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function AboutPage() {
-  const [services, statistics, testimonials] = await Promise.all([getServices(), getStatistics(), getTestimonials()]);
+  const [services, statistics, testimonials, mission, companyValues, valuePropositions, teamMembers] = await Promise.all([
+    getServices(),
+    getStatistics(),
+    getTestimonials(),
+    getMission(),
+    getFeatures("company_values"),
+    getFeatures("why_triaxis"),
+    getTeamMembers(),
+  ]);
 
   return (
     <>

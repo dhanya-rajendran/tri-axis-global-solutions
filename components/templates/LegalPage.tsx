@@ -5,7 +5,7 @@ import { breadcrumbJsonLd } from "@/lib/seo/jsonld";
 import { formatDate } from "@/lib/utils";
 import type { LegalDocument } from "@/types/content";
 
-export function LegalPage({ doc }: { doc: LegalDocument }) {
+export function LegalPage({ doc }: { doc: LegalDocument & { isDraft?: boolean } }) {
   const path = `/${doc.slug}`;
   return (
     <>
@@ -16,9 +16,11 @@ export function LegalPage({ doc }: { doc: LegalDocument }) {
       />
       <Container className="py-16 lg:py-20">
         <div className="mx-auto max-w-3xl">
-          <p className="rounded-card border border-gold/40 bg-gold/10 px-4 py-3 text-sm text-ink">
-            Draft for review — this policy must be approved by legal counsel before publication.
-          </p>
+          {doc.isDraft !== false && (
+            <p className="rounded-card border border-gold/40 bg-gold/10 px-4 py-3 text-sm text-ink">
+              Draft for review — this policy must be approved by legal counsel before publication.
+            </p>
+          )}
           <p className="mt-8 text-lg leading-relaxed text-ink">{doc.intro}</p>
           {doc.sections.map((s, i) => (
             <section key={s.heading} className="mt-10" aria-labelledby={`legal-${i}`}>

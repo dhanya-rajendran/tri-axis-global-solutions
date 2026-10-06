@@ -6,10 +6,9 @@ import { RecruitmentFeature } from "@/components/sections/RecruitmentFeature";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { PageHero } from "@/components/templates/PageHero";
 import { ButtonLink } from "@/components/ui/Button";
-import { processSteps } from "@/lib/data/company";
 import { breadcrumbJsonLd } from "@/lib/seo/jsonld";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { getServiceBySlug, getServices } from "@/lib/services/api";
+import { getProcessSteps, getServiceBySlug, getServices } from "@/lib/services/api";
 
 export const metadata: Metadata = buildMetadata({
   title: "Our Services",
@@ -19,7 +18,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function ServicesPage() {
-  const [services, recruitment] = await Promise.all([getServices(), getServiceBySlug("recruitment-talent-management")]);
+  const [services, recruitment, processSteps] = await Promise.all([getServices(), getServiceBySlug("recruitment-talent-management"), getProcessSteps()]);
   return (
     <>
       <PageHero

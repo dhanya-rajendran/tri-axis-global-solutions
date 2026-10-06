@@ -9,12 +9,13 @@ import { RecruitmentFeature } from "@/components/sections/RecruitmentFeature";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { TrustSection } from "@/components/sections/TrustSection";
 import { WhyTriAxis } from "@/components/sections/WhyTriAxis";
-import { processSteps, valuePropositions } from "@/lib/data/company";
 import { buildMetadata } from "@/lib/seo/metadata";
 import {
+  getFeatures,
   getIndustries,
   getInsights,
   getJobFilterOptions,
+  getProcessSteps,
   getServiceBySlug,
   getServices,
   getStatistics,
@@ -36,7 +37,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function HomePage() {
-  const [jobOptions, services, recruitment, industries, statistics, testimonials, insights] = await Promise.all([
+  const [jobOptions, services, recruitment, industries, statistics, testimonials, insights, valuePropositions, processSteps] = await Promise.all([
     getJobFilterOptions(),
     getServices(),
     getServiceBySlug("recruitment-talent-management"),
@@ -44,6 +45,8 @@ export default async function HomePage() {
     getStatistics(),
     getTestimonials(),
     getInsights({ limit: 4 }),
+    getFeatures("why_triaxis"),
+    getProcessSteps(),
   ]);
 
   return (

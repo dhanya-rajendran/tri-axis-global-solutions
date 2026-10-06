@@ -11,11 +11,10 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Icon } from "@/components/ui/Icon";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { employerBenefits, employerSolutions, processSteps } from "@/lib/data/company";
 import { images } from "@/lib/data/images";
 import { breadcrumbJsonLd } from "@/lib/seo/jsonld";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { getStatistics, getTestimonials } from "@/lib/services/api";
+import { getFeatures, getProcessSteps, getStatistics, getTestimonials } from "@/lib/services/api";
 
 export const metadata: Metadata = buildMetadata({
   title: "For Employers – Hire Talent in the UAE",
@@ -25,7 +24,13 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function EmployersPage() {
-  const [statistics, testimonials] = await Promise.all([getStatistics(), getTestimonials()]);
+  const [statistics, testimonials, employerBenefits, employerSolutions, processSteps] = await Promise.all([
+    getStatistics(),
+    getTestimonials(),
+    getFeatures("employer_benefits"),
+    getFeatures("employer_solutions"),
+    getProcessSteps(),
+  ]);
   return (
     <>
       <PageHero
